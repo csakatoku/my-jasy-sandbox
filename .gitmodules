@@ -1,3 +1,6 @@
 [submodule "externals/core"]
 	path = externals/core
 	url = git://github.com/wpbasti/core.git
+[submodule "externals/scroller"]
+	path = externals/scroller
+	url = git://github.com/zynga/scroller.git
