@@ -1,0 +1,8 @@
+msgid "Spam"
+msgstr "スパム"
+
+msgid "Egg"
+msgstr "エッグ"
+
+msgid "Ham"
+msgstr "ハム"
