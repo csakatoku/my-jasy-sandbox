@@ -1,9 +1,9 @@
 #!/usr/bin/env jasy
 import shutil
 import json
-import jasy
-from jasy.i18n.LocaleData import *
+import subprocess
 
+LOCALES = ["en", "ja"]
 PACKAGE = json.load(open('jasyproject.json'))
 
 
@@ -32,6 +32,31 @@ def clean():
     session.clearCache()
     session.close()
 
+
+@task
+def makemessages():
+    cmd = [
+        'xgettext',
+        '-L', 'C',
+        '--keyword=tr',
+        '--from-code', 'UTF-8',
+        '--add-comments=Translators',
+        '-o', 'source/translation/messages.pot',
+        'source/class/App.js',
+        ]
+    subprocess.call(cmd)
+
+    for locale in LOCALES:
+        po = 'source/translation/%s.po' % locale
+        cmd = [
+            'msgmerge',
+            '-o', po,
+            po,
+            'source/translation/messages.pot',
+            ]
+        subprocess.call(cmd)
+
+
 @task
 def build():
     session = getSession()
@@ -39,7 +64,7 @@ def build():
     # Configure permutations
     session.setField("es5", True)
     session.permutateField("debug")
-    session.permutateField("locale", ["en", "ja"])
+    session.permutateField("locale", LOCALES)
 
     # Prepare assets
     resolver = Resolver(session.getProjects())

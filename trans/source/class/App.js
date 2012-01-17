@@ -2,7 +2,7 @@ core.Class('p.trans.App', {
     construct: function(settings) {
         var tr = core.locale.Translate.tr;
         var list = document.createElement("ul");
-        var data = [tr("Spam"), tr("Egg"), tr("Ham")];
+        var data = [tr("Spam"), tr("Egg"), tr("Ham"), tr("Spam Spam Spam Egg")];
         data.forEach(function(text) {
             var element = document.createElement("li");
             element.innerHTML = text;
