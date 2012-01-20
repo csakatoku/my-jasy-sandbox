@@ -35,15 +35,18 @@ def clean():
 
 @task
 def makemessages():
+    session = getSession()
+
     cmd = [
         'xgettext',
         '-L', 'C',
         '--keyword=tr',
+        '--keyword=trc:1c,2',
+        '--keyword=trn:1,2',
         '--from-code', 'UTF-8',
         '--add-comments=Translators',
         '-o', 'source/translation/messages.pot',
-        'source/class/App.js',
-        ]
+        ] + [c.getPath() for c in session.getMainProject().getClasses().values()]
     subprocess.call(cmd)
 
     for locale in LOCALES:
@@ -97,6 +100,6 @@ def build():
 
         classes = Sorter(resolver, permutation).getSortedClasses()
         compressedCode = storeCompressed("build/app-%s.js" % permutation.getChecksum(), classes,
-            permutation=permutation, translation=translation, optimization=optimization, formatting=formatting, bootCode="new %s.App();" % PACKAGE['name'])
+            permutation=permutation, translation=translation, optimization=optimization, formatting=formatting, bootCode="(new %s.App()).init();" % PACKAGE['name'])
 
     session.close()

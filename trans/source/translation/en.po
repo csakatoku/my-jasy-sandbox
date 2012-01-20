@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-17 16:34+0900\n"
+"POT-Creation-Date: 2012-01-20 20:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: source/class/App.js:5
-msgid "Spam"
+#: /Users/csakatoku/dev/my-jasy-sandbox/trans/source/class/App.js:14
+msgctxt "The message should not contain HTML"
+msgid "How many spams do you want?"
 msgstr ""
 
-#: source/class/App.js:5
-msgid "Egg"
-msgstr ""
+#: /Users/csakatoku/dev/my-jasy-sandbox/trans/source/class/App.js:35
+msgid "You have a spam.%1"
+msgid_plural "You have %2 spams."
+msgstr[0] ""
+msgstr[1] ""
 
-#: source/class/App.js:5
-msgid "Ham"
-msgstr ""
-
-#: source/class/App.js:5
-msgid "Spam Spam Spam Egg"
+#: /Users/csakatoku/dev/my-jasy-sandbox/trans/source/class/App.js:37
+msgid "You don't have spam."
 msgstr ""
