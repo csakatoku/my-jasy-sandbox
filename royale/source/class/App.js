@@ -10,6 +10,12 @@
     };
 
     core.Class('r.App', {
+        include: [ r.Observable ],
+
+        construct: function() {
+            this.__currentController = null;
+        },
+
         properties: {
             player: {
                 type: 'r.model.Player',
@@ -23,18 +29,70 @@
                 var player = new r.model.Player();
                 this.setPlayer(player);
 
-                $(window).bind('hashchange', function() {
-                    self.getController().run();
-                });
-                self.getController().run();
+                var run = function() {
+                    var controllerName, actionName;
+                    var args = {};
+                    if (location.hash) {
+                        // #!/controller/:action
+                        var tmp = location.hash.substr(3).split('/');
+                        controllerName = tmp[0];
+                        actionName = tmp[1] || 'index';
+                        if (tmp.length >= 2) {
+                            for (var i = 2; i < tmp.length; i += 2) {
+                                var k = tmp[i];
+                                var v = tmp[i + 1];
+                                args[k] = v;
+                            }
+                        }
+                    } else {
+                        controllerName = 'default';
+                        actionName = 'index';
+                    }
+
+                    var action = actionName + 'Action';
+                    var controller = controllers[controllerName];
+                    if (controller === undefined) {
+                        controller = new classes[controllerName](self);
+                        controllers[controllerName] = controller;
+                    }
+
+                    var changed = (this.__currentController === undefined);
+                    if (self.__currentController && self.__currentController !== controller) {
+                        self.__currentController.sleep();
+                        changed = true;
+                    }
+
+                    self.__currentController = controller;
+
+                    if (changed) {
+                        controller.wakeup();
+                    }
+
+                    controller[action].call(controller, args);
+                };
+
+                $(window).bind('hashchange', run);
+                run();
+
+                this.invoke('app.boot');
             },
 
             getController: function() {
-                var name = location.hash ? location.hash.substr(1) : "default";
-                var controller = controllers[name];
-                if (controller === undef) {
-                    controller = new classes[name](this);
-                    controllers[name] = controller;
+                var controllerName, actionName;
+                if (location.hash) {
+                    // #!/controller/:action
+                    var tmp = location.hash.substr(3).split('/');
+                    controllerName = tmp[0];
+                    actionName = tmp[1] || 'index';
+                } else {
+                    controllerName = 'default';
+                    actionName = 'index';
+                }
+
+                var controller = controllers[controllerName];
+                if (controller === undefined) {
+                    controller = new classes[controllerName](this);
+                    controllers[controllerName] = controller;
                 }
                 return controller;
             }

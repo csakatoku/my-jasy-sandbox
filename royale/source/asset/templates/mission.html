@@ -1,10 +1,12 @@
-<section id="hud">
-  <span id="hud-xp"></span> / <span id="hud-energy"></span> / <span id="hud-coins"></span>
-</section>
 <div class="job">
-  <p>なんやかんやミッションの説明</p>
+  <h2>{{ mission.name }}</h2>
+  <ul>
+    <li>消費エナジー: {{ mission.energy }}</li>
+    <li>獲得経験値: {{ mission.xp }}</li>
+    <li>獲得コイン: {{ mission.minCoins }} 〜 {{ mission.maxCoins }}</li>
+  </ul>
   <button data-mission-do-job="1">DO JOB</button>
 </div>
 <nav>
-  <a href="#default">マイページへ</a>
+  <a href="#!/mission">ミッション一覧へ</a>
 </nav>

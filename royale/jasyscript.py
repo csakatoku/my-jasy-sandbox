@@ -13,7 +13,6 @@ def getSession():
     session = Session()
 
     session.addProject(Project("../externals/core/"))
-    session.addProject(Project("../externals/jQuery/"))
     session.addProject(Project("./external/mustache/"))
     session.addProject(Project("."))
 
@@ -47,7 +46,7 @@ def build():
     includedByKernel = storeKernel("build/loader.js", session, assets=assets)
 
     # Copy files from source
-    for staticFile in ["index.html"]:
+    for staticFile in ["index.html", "zepto.min.js"]:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
 
     # Compiler configuration

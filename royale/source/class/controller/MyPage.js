@@ -7,16 +7,14 @@ core.Class('r.controller.MyPage', {
     },
 
     members: {
-        run: function() {
-            this.initialize();
-            this.render();
-        },
-
-        initialize: function() {
+        wakeup: function() {
             this.__hud.init();
         },
 
-        render: function() {
+        sleep: function() {
+        },
+
+        indexAction: function() {
             this.template("my_page", {}, function(content) {
                 $("#content").html(content);
             });
