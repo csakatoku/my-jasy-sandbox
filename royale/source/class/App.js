@@ -6,7 +6,8 @@
 
     var classes = {
         'default': r.controller.MyPage,
-        'mission': r.controller.Mission
+        'mission': r.controller.Mission,
+        'gacha'  : r.controller.Gacha
     };
 
     core.Class('r.App', {
@@ -68,21 +69,23 @@
                         controller.wakeup();
                     }
 
-                    var response = controller[action].call(controller, args);
-                    if (response && response.route) {
-                        // TODO
-                        var args = response.args;
-                        var tmp = [];
-                        for (var k in args) {
-                            if (args.hasOwnProperty(k)) {
-                                tmp.push(k);
-                                tmp.push(args[k] || 0);
+                    var f = controller[action];
+                    if (f) {
+                        var response = f.call(controller, args);
+                        if (response && response.route) {
+                            // TODO
+                            var args = response.args;
+                            var tmp = [];
+                            for (var k in args) {
+                                if (args.hasOwnProperty(k)) {
+                                    tmp.push(k);
+                                    tmp.push(args[k] || 0);
+                                }
                             }
+                            var next = '#!/' + response.route + '/' + (tmp.join('/'));
+                            location.hash = next;
+                            run();
                         }
-                        var next = '#!/' + response.route + '/' + (tmp.join('/'));
-                        console.log([next, response]);
-                        location.hash = next;
-                        run();
                     }
                 };
 

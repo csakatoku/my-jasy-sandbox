@@ -80,9 +80,10 @@ core.Class('r.controller.Mission', {
             var player = this.__context.getPlayer();
             var energy = player.getEnergy();
             if (energy >= mission.energy) {
+                var coins = r.util.Random.randInt(mission.minCoins, mission.maxCoins);
                 player.setEnergy(energy - mission.energy);
                 player.setXp(player.getXp() + mission.xp);
-                player.setCoins(player.getCoins() + mission.minCoins);
+                player.setCoins(player.getCoins() + coins);
             }
         },
 
