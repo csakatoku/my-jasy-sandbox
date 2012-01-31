@@ -1,5 +1,5 @@
 core.Class('r.controller.MyPage', {
-    include: [ r.Observable, r.controller.TemplateMixin ],
+    include: [ r.controller.Controller ],
 
     construct: function(context) {
         this.__context = context;
@@ -11,13 +11,8 @@ core.Class('r.controller.MyPage', {
             this.__hud.init();
         },
 
-        sleep: function() {
-        },
-
         indexAction: function() {
-            this.template("my_page", {}, function(content) {
-                $("#content").html(content);
-            });
+            return this.render('my_page');
         }
     }
 });

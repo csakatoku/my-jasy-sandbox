@@ -1,5 +1,5 @@
 core.Class('r.controller.Mission', {
-    include: [ r.Observable, r.controller.TemplateMixin ],
+    include: [ r.controller.Controller ],
 
     construct: function(context) {
         this.__context = context;
@@ -37,25 +37,17 @@ core.Class('r.controller.Mission', {
             this.listen('player.energy', this.onEnergyChanged);
         },
 
-        sleep: function() {
-            this.unregister();
-        },
-
         indexAction: function() {
-            var self = this;
             var params = {
                 missions: this.__missions
             };
-            this.template("mission_list", params, function(content) {
-                $("#content").html(content);
+            return this.render("mission_list", params, function(self, args) {
                 self.__hud.init();
                 self.__currentMission = null;
             });
         },
 
         doAction: function(args) {
-            var self = this;
-
             var id = parseInt(args.id || 1);
             var mission;
             this.__missions.forEach(function(m) {
@@ -64,11 +56,13 @@ core.Class('r.controller.Mission', {
                 }
             });
 
-            this.template("mission", {
-                mission: mission
-            }, function(content) {
-                $("#content").html(content);
+            if (mission == undefined) {
+                return this.redirect('mission/do');
+            }
 
+            return this.render("mission", {
+                mission: mission
+            }, function(self, args) {
                 $('[data-mission-do-job]').each(function(idx, el) {
                     $(el).bind('click', function(evt) {
                         self.doJob(mission);
@@ -93,7 +87,7 @@ core.Class('r.controller.Mission', {
             if (this.__currentMission) {
                 var energy = player.getEnergy();
                 var elements = $('[data-mission-do-job]');
-                if (
+                if (energy >= this.__currentMission.energy) {
                     elements.removeAttr('disabled');
                 } else {
                     elements.attr('disabled', 'disabled');

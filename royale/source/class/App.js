@@ -68,33 +68,28 @@
                         controller.wakeup();
                     }
 
-                    controller[action].call(controller, args);
+                    var response = controller[action].call(controller, args);
+                    if (response && response.route) {
+                        // TODO
+                        var args = response.args;
+                        var tmp = [];
+                        for (var k in args) {
+                            if (args.hasOwnProperty(k)) {
+                                tmp.push(k);
+                                tmp.push(args[k] || 0);
+                            }
+                        }
+                        var next = '#!/' + response.route + '/' + (tmp.join('/'));
+                        console.log([next, response]);
+                        location.hash = next;
+                        run();
+                    }
                 };
 
                 $(window).bind('hashchange', run);
                 run();
 
                 this.invoke('app.boot');
-            },
-
-            getController: function() {
-                var controllerName, actionName;
-                if (location.hash) {
-                    // #!/controller/:action
-                    var tmp = location.hash.substr(3).split('/');
-                    controllerName = tmp[0];
-                    actionName = tmp[1] || 'index';
-                } else {
-                    controllerName = 'default';
-                    actionName = 'index';
-                }
-
-                var controller = controllers[controllerName];
-                if (controller === undefined) {
-                    controller = new classes[controllerName](this);
-                    controllers[controllerName] = controller;
-                }
-                return controller;
             }
         }
     });
