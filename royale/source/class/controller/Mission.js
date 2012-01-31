@@ -1,5 +1,5 @@
 core.Class('r.controller.Mission', {
-    include: [ r.Observable ],
+    include: [ r.Observable, r.controller.TemplateMixin ],
 
     construct: function(context) {
         this.__context = context;
@@ -13,6 +13,10 @@ core.Class('r.controller.Mission', {
         },
 
         initialize: function() {
+            // do nothing
+        },
+
+        initializeUI: function() {
             var self = this;
             $('[data-mission-do-job]').each(function(idx, el) {
                 $(el).bind('click', function(evt) {
@@ -24,7 +28,11 @@ core.Class('r.controller.Mission', {
         },
 
         render: function() {
-            //
+            var self = this;
+            this.template("mission", {}, function(content) {
+                $("#content").html(content);
+                self.initializeUI();
+            });
         },
 
         doJob: function(event) {
