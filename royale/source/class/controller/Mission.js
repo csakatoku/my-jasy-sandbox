@@ -8,6 +8,7 @@ core.Class('r.controller.Mission', {
                     {
                         id: 1,
                         name: 'Mission 1',
+                        description: '中二病的な説明がここに入ります',
                         xp: 1,
                         energy: 1,
                         minCoins: 1,
@@ -16,6 +17,7 @@ core.Class('r.controller.Mission', {
                     {
                         id: 2,
                         name: 'Mission 2',
+                        description: '192.168.56.101',
                         xp: 2,
                         energy: 2,
                         minCoins: 3,
@@ -24,6 +26,7 @@ core.Class('r.controller.Mission', {
                     {
                         id: 3,
                         name: 'Mission 3',
+                        description: '<span>descripton</span>',
                         xp: 3,
                         energy: 3,
                         minCoins: 4,
