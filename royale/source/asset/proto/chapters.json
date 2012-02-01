@@ -1,0 +1,16 @@
+[
+    {
+        "id"       : 1,
+        "name"     : "Chapter 1",
+        "begining" : "begining",
+        "ending"   : "ending",
+        "missions": [ 1, 2, 3 ]
+    },
+    {
+        "id"       : 2,
+        "name"     : "Chapter 2",
+        "begining" : "begining",
+        "ending"   : "ending",
+        "missions": [ 4, 5, 6 ]
+    }
+]

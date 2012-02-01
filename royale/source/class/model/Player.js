@@ -99,12 +99,39 @@ core.Class('r.model.Player', {
             return next;
         },
 
+        isCompletedChapter: function(chapter) {
+            var self = this;
+            return chapter.getMissions().every(function(mission) {
+                var progress = self.getProgressById(mission.id);
+                return progress >= 100;
+            });
+        },
+
+        refreshCurrentChapter: function() {
+            var chapters = r.model.Chapter.list();
+            var chapter = chapters[0], next;
+            for (var i = 0, length = chapters.length; i < length; i++) {
+                next = chapters[i];
+                if (!this.isCompletedChapter(chapter)) {
+                    break;
+                }
+                chapter = next;
+            }
+            this.__currentChapter = chapter;
+        },
+
+        getCurrentChapter: function() {
+            return this.__currentChapter;
+        },
+
         onGameBooted: function() {
             var self = this;
             this.__lastEnergyGenerated = Date.now();
             this.__interval = setInterval(function() {
                 self.regenerateEnergy();
             }, 1000);
+
+            this.refreshCurrentChapter();
         }
     }
 });

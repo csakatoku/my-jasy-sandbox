@@ -4,7 +4,6 @@ core.Class('r.controller.Mission', {
     construct: function(context) {
         this.__context = context;
         this.__hud = new r.ui.HUD(context);
-        this.__missions = context.getConfig('missions');
     },
 
     members: {
@@ -16,8 +15,12 @@ core.Class('r.controller.Mission', {
         },
 
         indexAction: function() {
+            var player = this.__context.getPlayer();
+            var chapter = player.getCurrentChapter();
+            var missions = chapter.getMissions();
             var params = {
-                missions: this.__missions
+                chapter_name : chapter.getName(),
+                missions: missions
             };
             return this.render("mission_list", params, function(self, args) {
                 self.__hud.init();
@@ -26,21 +29,16 @@ core.Class('r.controller.Mission', {
         },
 
         doAction: function(args) {
-            var id = parseInt(args.id || 1);
-            var mission;
-            this.__missions.forEach(function(m) {
-                if (m.id === id) {
-                    mission = m;
-                }
-            });
-
+            var player = this.__context.getPlayer();
+            var chapter = player.getCurrentChapter();
+            var mission = chapter.getMissionById(args.id);
             if (mission == undefined) {
-                return this.redirect('mission/do');
+                return this.redirect('mission');
             }
 
             return this.render("mission", {
                 mission: mission,
-                mission_progress: this.__context.getPlayer().getProgressById(mission.id)
+                mission_progress: player.getProgressById(mission.id)
             }, function(self, args) {
                 $('[data-mission-do-job]').each(function(idx, el) {
                     $(el).bind('click', function(evt) {
@@ -82,6 +80,7 @@ core.Class('r.controller.Mission', {
 
         onMissionMastered: function(value) {
             this.presentModalView(new r.ui.MissionMasterView());
+            this.__context.getPlayer().refreshCurrentChapter();
         },
 
         onMissionProgressed: function(value) {

@@ -25,5 +25,33 @@
         "energy": 3,
         "minCoins": 4,
         "maxCoins": 8
+    },
+
+    {
+        "id": 4,
+        "name": "Mission 4",
+        "description": "中二病的な説明がここに入ります",
+        "xp": 4,
+        "energy": 4,
+        "minCoins": 8,
+        "maxCoins": 10
+    },
+    {
+        "id": 5,
+        "name": "Mission 2",
+        "description": "192.168.56.101",
+        "xp": 2,
+        "energy": 2,
+        "minCoins": 3,
+        "maxCoins": 4
+    },
+    {
+        "id": 6,
+        "name": "Mission 3",
+        "description": "<span>descripton</span>",
+        "xp": 3,
+        "energy": 3,
+        "minCoins": 4,
+        "maxCoins": 8
     }
 ]

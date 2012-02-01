@@ -40,6 +40,7 @@
                 this.invoke('app.boot.start', bootStarted);
 
                 var ids = [
+                    'r/proto/chapters.json',
                     'r/proto/missions.json'
                 ];
                 core.io.Asset.load(ids, function(assets) {
@@ -54,6 +55,9 @@
                             }
                         }
                     }
+
+                    // TODO
+                    r.model.Chapter.init(this);
 
                     this.invoke('app.boot.complete', Date.now());
                     this.run();
