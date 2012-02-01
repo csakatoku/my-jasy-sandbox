@@ -132,6 +132,8 @@ core.Class('r.model.Player', {
             }, 1000);
 
             this.refreshCurrentChapter();
+
+            this.unregister('app.boot.complete');
         }
     }
 });

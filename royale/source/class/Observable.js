@@ -20,25 +20,39 @@
                 listeners[type] = seq;
             },
 
-            unregister: function() {
-                for (var key in listeners) {
-                    if (listeners.hasOwnProperty(key)) {
-                        var seq = listeners[key];
-                        var index = -1;
-                        for (var i = 0; i < seq.length; i++) {
-                            var pair = seq[i];
-                            var scope = pair[1];
-                            if (scope === this) {
-                                index = i;
-                                break;
-                            }
+            unregister: function(name) {
+                if (name) {
+                    return this.__unregisterByType(name) ? [name] : [];
+                } else {
+                    var types = [];
+                    var self = this;
+                    Object.keys(listeners).map(function(key) {
+                        if (self.__unregisterByType(key)) {
+                            types.push(key);
                         }
+                    });
+                    return types;
+                }
+            },
 
-                        if (index >= 0) {
-                            seq.splice(index, 1);
-                        }
+            __unregisterByType: function(type) {
+                var seq = listeners[type];
+                var index = -1;
+                for (var i = 0, length = seq.length; i < length; i++) {
+                    var pair = seq[i];
+                    var scope = pair[1];
+                    if (scope === this) {
+                        index = i;
+                        break;
                     }
                 }
+
+                if (index >= 0) {
+                    seq.splice(index, 1);
+                    return true;
+                }
+
+                return false;
             }
         }
     });
