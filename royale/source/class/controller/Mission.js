@@ -38,6 +38,7 @@ core.Class('r.controller.Mission', {
     members: {
         wakeup: function() {
             this.listen('player.energy', this.onEnergyChanged);
+            this.listen('player.level', this.onLevelUp);
         },
 
         indexAction: function() {
@@ -82,8 +83,8 @@ core.Class('r.controller.Mission', {
             if (energy >= mission.energy) {
                 var coins = r.util.Random.randInt(mission.minCoins, mission.maxCoins);
                 player.setEnergy(energy - mission.energy);
-                player.setXp(player.getXp() + mission.xp);
                 player.setCoins(player.getCoins() + coins);
+                player.addXp(mission.xp);
             }
         },
 
@@ -97,6 +98,10 @@ core.Class('r.controller.Mission', {
                     elements.attr('disabled', 'disabled');
                 }
             }
+        },
+
+        onLevelUp: function(player) {
+            this.presentModalView(new r.ui.LevelUpView());
         }
     }
 });

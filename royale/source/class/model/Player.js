@@ -37,9 +37,30 @@ core.Class('r.model.Player', {
                 this.invoke('player.xp', this);
             }
         },
+
+        level: {
+            type: 'integer',
+            init: 1,
+            apply: function(value) {
+                this.invoke('player.level', this);
+            }
+        }
     },
 
     members : {
+        addXp: function(delta) {
+            var level = this.getLevel();
+            var xp = this.getXp() + delta;
+            this.setXp(xp);
+
+            if (xp >= (level * 20)) {
+                this.__lastEnergyGenerated = Date.now();
+                this.setMaxEnergy(this.getMaxEnergy() + 1);
+                this.setEnergy(this.getMaxEnergy());
+                this.setLevel(level + 1);
+            }
+        },
+
         regenerateEnergy: function() {
             var now = Date.now();
             var delta = now - this.__lastEnergyGenerated;

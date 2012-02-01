@@ -17,7 +17,8 @@ core.Class('r.ui.HUD', {
         },
 
         onEnergyChanged: function(player) {
-            $("#hud-energy").html(player.getEnergy());
+            var e = player.getEnergy() + "/" + player.getMaxEnergy();
+            $("#hud-energy").html(e);
         },
 
         onXpChanged: function(player) {
