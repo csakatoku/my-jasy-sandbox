@@ -44,6 +44,11 @@ core.Class('r.model.Player', {
             apply: function(value) {
                 this.invoke('player.level', this);
             }
+        },
+
+        missions: {
+            type: "Object",
+            init: {}
         }
     },
 
@@ -74,6 +79,24 @@ core.Class('r.model.Player', {
                     console.log("energy regenerated");
                 }
             }
+        },
+
+        getProgressById: function(missionId) {
+            var m = this.getMissions();
+            var current = m[missionId] || 0;
+            return current > 100 ? 100 : current;
+        },
+
+        progressMission: function(missionId, delta) {
+            var m = this.getMissions();
+            var current = m[missionId] || 0;
+            var next = (current + delta) > 100 ? 100 : current + delta;
+            m[missionId] = next;
+            this.invoke('player.missions.progress', next);
+            if (current !==next && next === 100) {
+                this.invoke('player.missions.master', missionId);
+            }
+            return next;
         },
 
         onGameBooted: function() {

@@ -39,6 +39,8 @@ core.Class('r.controller.Mission', {
         wakeup: function() {
             this.listen('player.energy', this.onEnergyChanged);
             this.listen('player.level', this.onLevelUp);
+            this.listen('player.missions.progress', this.onMissionProgressed);
+            this.listen('player.missions.master', this.onMissionMastered);
         },
 
         indexAction: function() {
@@ -65,7 +67,8 @@ core.Class('r.controller.Mission', {
             }
 
             return this.render("mission", {
-                mission: mission
+                mission: mission,
+                mission_progress: this.__context.getPlayer().getProgressById(mission.id)
             }, function(self, args) {
                 $('[data-mission-do-job]').each(function(idx, el) {
                     $(el).bind('click', function(evt) {
@@ -85,6 +88,7 @@ core.Class('r.controller.Mission', {
                 player.setEnergy(energy - mission.energy);
                 player.setCoins(player.getCoins() + coins);
                 player.addXp(mission.xp);
+                player.progressMission(mission.id, 10);
             }
         },
 
@@ -102,6 +106,14 @@ core.Class('r.controller.Mission', {
 
         onLevelUp: function(player) {
             this.presentModalView(new r.ui.LevelUpView());
+        },
+
+        onMissionMastered: function(value) {
+            this.presentModalView(new r.ui.MissionMasterView());
+        },
+
+        onMissionProgressed: function(value) {
+            $("#mission-progress-value").html(value + "/100");
         }
     }
 });
