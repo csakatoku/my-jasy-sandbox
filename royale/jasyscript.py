@@ -13,7 +13,7 @@ def getSession():
     session = Session()
 
     session.addProject(Project("../externals/core/"))
-    session.addProject(Project("./external/mustache/"))
+    session.addProject(Project("./external/hogan.js/"))
     session.addProject(Project("."))
 
     return session
