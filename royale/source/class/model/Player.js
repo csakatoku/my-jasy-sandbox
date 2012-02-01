@@ -2,7 +2,7 @@ core.Class('r.model.Player', {
     include: [ r.Observable ],
 
     construct: function() {
-        this.listen('app.boot', this.onGameBooted);
+        this.listen('app.boot.complete', this.onGameBooted);
     },
 
     properties: {
