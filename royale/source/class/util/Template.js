@@ -2,6 +2,7 @@
  * @require {$}
  */
 (function(globals) {
+    var timestamp = Date.now();
     var __cache = {}; //globals.sessionStorage;
     var __compiled = {};
 
@@ -25,10 +26,9 @@
                     return;
                 }
 
-                var path = 'asset/r/templates/' + templateName + '.html';
+                var path = 'asset/r/templates/' + templateName + '.html?t=' + timestamp;
                 $.ajax({
                     url    : path,
-                    cache  : false,
                     success:  function(templateString) {
                         __cache[cacheKey] = templateString;
                         __compiled[cacheKey] = tmpl = Hogan.compile(templateString);
