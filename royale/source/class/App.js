@@ -2,8 +2,6 @@
  * @asset {r/*}
  */
 (function(globals, undef) {
-    var controllers = {};
-
     var classes = {
         'default': r.controller.MyPage,
         'mission': r.controller.Mission,
@@ -89,22 +87,17 @@
                 }
 
                 var action = actionName + 'Action';
-                var controller = controllers[controllerName];
-                if (controller === undefined) {
-                    controller = new classes[controllerName](this);
-                    controllers[controllerName] = controller;
-                }
-
-                var changed = (this.__currentController === undefined);
-                if (this.__currentController && this.__currentController !== controller) {
-                    this.__currentController.sleep();
-                    changed = true;
-                }
-
-                this.__currentController = controller;
-
-                if (changed) {
-                    controller.wakeup();
+                var klass = classes[controllerName];
+                var controller;
+                if (this.__currentController === undefined) {
+                    this.__currentController = controller = new klass(this);
+                } else {
+                    if (this.__currentController.constructor.className === klass.className) {
+                        controller = this.__currentController;
+                    } else {
+                        this.__currentController.unregister();
+                        this.__currentController = controller = new klass(this);
+                    }
                 }
 
                 var f = controller[action];

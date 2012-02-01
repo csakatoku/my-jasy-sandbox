@@ -7,14 +7,6 @@
         include: [ r.Observable, r.util.Template ],
 
         members: {
-            wakeup: function() {
-                //
-            },
-
-            sleep: function() {
-                this.unregister();
-            },
-
             redirect: function(route, params) {
                 var args = params || {};
                 return {

@@ -4,16 +4,13 @@ core.Class('r.controller.Mission', {
     construct: function(context) {
         this.__context = context;
         this.__hud = new r.ui.HUD(context);
+        this.listen('player.energy', this.onEnergyChanged);
+        this.listen('player.level', this.onLevelUp);
+        this.listen('player.missions.progress', this.onMissionProgressed);
+        this.listen('player.missions.master', this.onMissionMastered);
     },
 
     members: {
-        wakeup: function() {
-            this.listen('player.energy', this.onEnergyChanged);
-            this.listen('player.level', this.onLevelUp);
-            this.listen('player.missions.progress', this.onMissionProgressed);
-            this.listen('player.missions.master', this.onMissionMastered);
-        },
-
         indexAction: function() {
             var player = this.__context.getPlayer();
             var chapter = player.getCurrentChapter();
