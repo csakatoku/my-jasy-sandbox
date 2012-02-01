@@ -4,3 +4,6 @@
 [submodule "externals/scroller"]
 	path = externals/scroller
 	url = git://github.com/zynga/scroller.git
+[submodule "externals/qunit"]
+	path = externals/qunit
+	url = git://github.com/jquery/qunit.git

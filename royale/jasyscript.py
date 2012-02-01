@@ -66,4 +66,7 @@ def build():
         compressedCode = storeCompressed("build/app-%s.js" % permutation.getChecksum(), classes,
             permutation=permutation, optimization=optimization, formatting=formatting, bootCode="window.APP = new %s.App();window.APP.boot();" % PACKAGE['name'])
 
+        compressedTestCode = storeCompressed("build/app-test-%s.js" % permutation.getChecksum(), classes,
+            permutation=permutation, optimization=optimization, formatting=formatting, bootCode="")
+
     session.close()
