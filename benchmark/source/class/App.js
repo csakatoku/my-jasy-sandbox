@@ -14,10 +14,6 @@ core.Class('benchmark.App', {
             });
         }
         this.__data = { 'messages': seq };
-
-        this.__hogan = null;
-        this.__hamlCompiled = null;
-        this.__hamlOptimized = null;
     },
 
     members: {
@@ -25,13 +21,13 @@ core.Class('benchmark.App', {
             var self  = this;
             var hogan = core.io.Asset.toUri('benchmark/templates/tmpl.mustache');
             var haml  = core.io.Asset.toUri('benchmark/templates/tmpl.haml');
+            var _swig = core.io.Asset.toUri('benchmark/templates/tmpl.twig');
 
             core.io.Text.load(hogan, function(uri, error, data) {
-                self.__hogan = Hogan.compile(data.text);
-
                 document.getElementById('hogan').addEventListener('click', function() {
+                    var tmpl = Hogan.compile(data.text);
                     self.benchmark('hogan.js', function(params) {
-                        return self.__hogan.render(params);
+                        return tmpl.render(params);
                     });
                 }, false);
             }, this, true);
@@ -51,18 +47,22 @@ core.Class('benchmark.App', {
                     });
                 }, false);
             }, this, true);
+
+            core.io.Text.load(_swig, function(uri, error, data) {
+                var tmpl = swig.compile(data.text, { filname: 'inbox' });
+                document.getElementById('swig').addEventListener('click', function() {
+                    self.benchmark('swig.js', function(params) {
+                        return tmpl(params);
+                    });
+                }, false);
+            }, this, true);
         },
 
         benchmark: function(name, func) {
-            var tmpl = this.__hogan;
             var data = this.__data;
-            var content, i;
-            if (tmpl === null) {
-                return;
-            }
-
             var start = Date.now();
             var times = 10000;
+            var i;
             for (i = 0; i < times; i++) {
                 content = func(data);
             }

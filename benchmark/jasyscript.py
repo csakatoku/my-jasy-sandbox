@@ -35,7 +35,7 @@ def build():
     includedByKernel = storeKernel("build/loader.js", session, assets=assets)
 
     # Asset以外に必要な静的ファイルをビルドディレクトリにコピーする
-    for staticFile in ["index.html", "haml.js"]:
+    for staticFile in ["index.html", "haml.js", 'swig.pack.min.js']:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
 
     # 最適化オプションを指定
