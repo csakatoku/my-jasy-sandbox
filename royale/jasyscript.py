@@ -14,6 +14,7 @@ def getSession():
 
     session.addProject(Project("../externals/core/"))
     session.addProject(Project("./external/hogan.js/"))
+    session.addProject(Project("./external/jsdeferred/"))
     session.addProject(Project("."))
 
     return session

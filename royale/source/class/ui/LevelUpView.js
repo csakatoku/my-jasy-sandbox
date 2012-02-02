@@ -5,7 +5,7 @@ core.Class('r.ui.LevelUpView', {
         render: function(params) {
             var self = this;
             var args = params || {};
-            this.template('levelup', args, function(content) {
+            return this.template('levelup', args).next(function(content) {
                 var element = $(content);
                 $("body").prepend(element);
                 $("button[data-outlet-click]").bind("click", function() {

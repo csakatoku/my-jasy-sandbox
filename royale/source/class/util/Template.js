@@ -2,7 +2,6 @@
  * @require {$}
  */
 (function(globals) {
-    var timestamp = Date.now();
     var __cache = {}; //globals.sessionStorage;
     var __compiled = {};
 
@@ -13,29 +12,28 @@
                 var cacheKey = '_template_' + templateName;
                 var tmpl = __compiled[cacheKey];
                 if (tmpl) {
-                    content = tmpl.render(params);
-                    func.call(this, content);
-                    return;
+                    return Deferred.next(function() {
+                        return tmpl.render(params);
+                    });
                 }
 
                 var templateString = __cache[cacheKey];
                 if (templateString) {
-                    __compiled[cacheKey] = tmpl = Hogan.compile(templateString);
-                    content = tmpl.render(params);
-                    func.call(this, content);
-                    return;
+                    return Deferred.next(function() {
+                        var tmpl = __compiled[cacheKey] = Hogan.compile(templateString);
+                        return tmpl.render(params);
+                    });
                 }
 
-                var path = 'asset/r/templates/' + templateName + '.html?t=' + timestamp;
-                $.ajax({
-                    url    : path,
-                    success:  function(templateString) {
-                        __cache[cacheKey] = templateString;
-                        __compiled[cacheKey] = tmpl = Hogan.compile(templateString);
-                        content = tmpl.render(params);
-                        func.call(this, content);
-                    }
-                });
+                var deferred = new Deferred();
+                var path = 'asset/r/templates/' + templateName + '.html';
+                core.io.Text.load(path, function(url, _, data) {
+                    var tmpl = __compiled[cacheKey] = Hogan.compile(data.text);
+                    __cache[cacheKey] = templateString;
+                    deferred.call(tmpl.render(params));
+                }, this, true); // TODO enable cache
+
+                return deferred;
             }
         }
     });

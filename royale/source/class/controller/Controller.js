@@ -18,13 +18,12 @@
             render: function(templateName, params, postRendered) {
                 var self = this;
                 var args = params || {};
-                this.template(templateName, args, function(content) {
+                return this.template(templateName, args).next(function(content) {
                     $("#content").html(content);
                     if (postRendered) {
                         postRendered.apply(self, [self, args]);
                     }
                 });
-                return null;
             },
 
             presentModalView: function(view, element) {
