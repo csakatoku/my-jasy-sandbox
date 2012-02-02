@@ -16,13 +16,11 @@
             },
 
             render: function(templateName, params, postRendered) {
-                var self = this;
+                var controller = this;
                 var args = params || {};
                 return this.template(templateName, args).next(function(content) {
                     $("#content").html(content);
-                    if (postRendered) {
-                        postRendered.apply(self, [self, args]);
-                    }
+                    return controller;
                 });
             },
 
