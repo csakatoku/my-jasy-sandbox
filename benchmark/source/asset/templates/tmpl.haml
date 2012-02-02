@@ -1,0 +1,11 @@
+%h2 Inbox
+:each msg in messages
+  %div
+    From:
+    = msg.name
+    %br
+    = msg.content
+    %br
+    %a{ href: "#" }
+      Receive an8d Gift Back
+    %br
