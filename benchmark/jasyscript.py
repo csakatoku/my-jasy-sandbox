@@ -5,7 +5,8 @@ def getSession():
 
     # 依存しているJasyプロジェクトのディレクトリを指定
     session.addProject(Project("../externals/core/"))
-    #session.addProject(Project("../externals/haml-js/"))
+    #session.addProject(Project("../externals/jquery/"))
+    #session.addProject(Project("../externals/jsrender/"))
     session.addProject(Project("../externals/hogan.js/"))
     session.addProject(Project("."))
 
@@ -37,6 +38,9 @@ def build():
     # Asset以外に必要な静的ファイルをビルドディレクトリにコピーする
     for staticFile in ["index.html", "haml.js", 'swig.pack.min.js']:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
+
+    for staticFile in ["jsrender/jsrender.js"]:
+        updateFile("../externals/%s" % staticFile, "build/%s" % staticFile)
 
     # 最適化オプションを指定
     optimization = Optimization("variables", "declarations", "blocks", "privates")
