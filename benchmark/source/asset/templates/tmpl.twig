@@ -1,0 +1,8 @@
+<h2>Inbox(Swig)</h2>
+{% for msg in messages %}
+<div>
+  From:{{ msg.name }}<br />
+  {{ msg.content }}<br />
+  <a href="#">Receive and Gift Back</a><br />
+</div>
+{% endfor %}

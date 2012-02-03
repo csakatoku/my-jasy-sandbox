@@ -1,27 +1,15 @@
 #!/usr/bin/env jasy
-import shutil
-import json
-
-PACKAGE = json.load(open('jasyproject.json'))
-
-
-#
-# Utils
-#
 
 def getSession():
     session = Session()
 
+    # 依存しているJasyプロジェクトのディレクトリを指定
     session.addProject(Project("../externals/core/"))
+    #session.addProject(Project("../externals/haml-js/"))
     session.addProject(Project("../externals/hogan.js/"))
-    session.addProject(Project("./external/jsdeferred/"))
     session.addProject(Project("."))
 
     return session
-
-#
-# Tasks
-#
 
 @task
 def clean():
@@ -34,40 +22,40 @@ def clean():
 def build():
     session = getSession()
 
-    # Configure permutations
+    # プロジェクトのビルド設定
     session.setField("es5", True)
     session.permutateField("debug")
 
-    # Prepare assets
+    # Asset(画像, CSS等)の設定
     resolver = Resolver(session.getProjects())
-    resolver.addClassName("%s.App" % PACKAGE['name'])
+    resolver.addClassName("benchmark.App")
     assets = Asset(session, resolver.getIncludedClasses()).exportBuild()
 
-    # Write kernel script
+    # 起動スクリプトをbuild/loader.jsに出力
     includedByKernel = storeKernel("build/loader.js", session, assets=assets)
 
-    # Copy files from source
-    for staticFile in ["index.html", "zepto.min.js"]:
+    # Asset以外に必要な静的ファイルをビルドディレクトリにコピーする
+    for staticFile in ["index.html", "haml.js", 'swig.pack.min.js']:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
 
-    # Compiler configuration
+    # 最適化オプションを指定
     optimization = Optimization("variables", "declarations", "blocks", "privates")
     formatting = Formatting()
 
-    # Process every possible permutation
+    # 起動後に最初に実行されるスクリプトを指定
+    bootCode = "window.APP = new benchmark.App();window.APP.boot();"
+
+    # 設定ごとにbuild/benchmark-{{ hexdiget }}.jsというファイルを出力する
     for permutation in session.getPermutations():
 
-        # Resolving dependencies
+        # 依存しているクラスを解決
         resolver = Resolver(session.getProjects(), permutation)
-        resolver.addClassName("%s.App" % PACKAGE['name'])
+        resolver.addClassName("benchmark.App")
         resolver.excludeClasses(includedByKernel)
 
-        # Compressing classes
+        # 必要なクラスのみ圧縮して書き出し
         classes = Sorter(resolver, permutation).getSortedClasses()
         compressedCode = storeCompressed("build/app-%s.js" % permutation.getChecksum(), classes,
-            permutation=permutation, optimization=optimization, formatting=formatting, bootCode="window.APP = new %s.App();window.APP.boot();" % PACKAGE['name'])
-
-        compressedTestCode = storeCompressed("build/app-test-%s.js" % permutation.getChecksum(), classes,
-            permutation=permutation, optimization=optimization, formatting=formatting, bootCode="")
+            permutation=permutation, optimization=optimization, formatting=formatting, bootCode=bootCode)
 
     session.close()

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>JS Template Benchmark</title>
+</head>
+<body>
+  <h1>JS Template Benchmark</h1>
+  <button id="hogan">hogan.js compiled</button>
+  <button id="haml-compiled">haml.js compiled</button>
+  <button id="haml-optimized">haml.js optimized</button>
+  <button id="swig">swig</button>
+  <div id="result"></div>
+  <div id="content"></div>
+  <script type="text/javascript" src="haml.js"></script>
+  <script type="text/javascript" src="swig.pack.min.js"></script>
+  <script type="text/javascript" src="loader.js"></script>
+  <script type="text/javascript">core.io.Script.load("app-" + core.Env.CHECKSUM + ".js");</script>
+</body>
+</html>
