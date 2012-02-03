@@ -22,6 +22,8 @@ core.Class('benchmark.App', {
         boot: function() {
             var self  = this;
             var hogan = core.io.Asset.toUri('benchmark/templates/tmpl.mustache');
+            var _whiskers = core.io.Asset.toUri('benchmark/templates/tmpl.whiskers');
+            var _jade  = core.io.Asset.toUri('benchmark/templates/tmpl.jade');
             var haml  = core.io.Asset.toUri('benchmark/templates/tmpl.haml');
             var _swig = core.io.Asset.toUri('benchmark/templates/tmpl.twig');
             var jsrender = core.io.Asset.toUri('benchmark/templates/tmpl.jsrender.html');
@@ -35,9 +37,27 @@ core.Class('benchmark.App', {
                 }, false);
             }, this, true);
 
+            core.io.Text.load(_whiskers, function(uri, error, data) {
+                document.getElementById('whiskers').addEventListener('click', function() {
+                    var tmpl = whiskers.compile(data.text);
+                    self.benchmark('whiskers.js', function(params) {
+                        return whiskers.render(tmpl, params, '');
+                    });
+                }, false);
+            }, this, true);
+
+            core.io.Text.load(_jade, function(uri, error, data) {
+                document.getElementById('jade-compiled').addEventListener('click', function() {
+                    var tmpl = jade.compile(data.text, { cache: true, filename: "jade" });
+                    self.benchmark('jade.js compiled', function(params) {
+                        return tmpl(params);
+                    });
+                }, false);
+            }, this, true);
+
             core.io.Text.load(haml, function(uri, error, data) {
                 document.getElementById('haml-compiled').addEventListener('click', function() {
-                    Haml(haml, {escapeHtmlByDefault: true})
+                    Haml(haml, {escapeHtmlByDefault: true});
                     var tmpl = Haml.compile(data.text);
                     self.benchmark('haml.js compiled', function(params) {
                         return Haml.execute(tmpl, self, params);
