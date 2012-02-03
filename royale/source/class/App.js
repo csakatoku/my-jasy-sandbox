@@ -18,7 +18,7 @@
 
         properties: {
             player: {
-                type: 'r.model.Player',
+                type: 'object',
                 init: null
             }
         },

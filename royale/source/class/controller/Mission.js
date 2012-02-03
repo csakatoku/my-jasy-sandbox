@@ -19,7 +19,7 @@ core.Class('r.controller.Mission', {
                 chapter_name : chapter.getName(),
                 missions: missions
             };
-            return this.render("mission_list", params, function(self, args) {
+            return this.render("mission_list", params).next(function(self) {
                 self.__hud.init();
                 self.__currentMission = null;
             });
@@ -36,7 +36,7 @@ core.Class('r.controller.Mission', {
             return this.render("mission", {
                 mission: mission,
                 mission_progress: player.getProgressById(mission.id)
-            }, function(self, args) {
+            }).next(function(self) {
                 $('[data-mission-do-job]').each(function(idx, el) {
                     $(el).bind('click', function(evt) {
                         self.doJob(mission);

@@ -1,4 +1,6 @@
 /**
+ * @require {$}
+ * @require {jsrender}
  * @asset {benchmark/*}
  */
 "use strict";
@@ -22,6 +24,7 @@ core.Class('benchmark.App', {
             var hogan = core.io.Asset.toUri('benchmark/templates/tmpl.mustache');
             var haml  = core.io.Asset.toUri('benchmark/templates/tmpl.haml');
             var _swig = core.io.Asset.toUri('benchmark/templates/tmpl.twig');
+            var jsrender = core.io.Asset.toUri('benchmark/templates/tmpl.jsrender.html');
 
             core.io.Text.load(hogan, function(uri, error, data) {
                 document.getElementById('hogan').addEventListener('click', function() {
@@ -54,6 +57,15 @@ core.Class('benchmark.App', {
                 document.getElementById('swig').addEventListener('click', function() {
                     self.benchmark('swig.js', function(params) {
                         return tmpl(params);
+                    });
+                }, false);
+            }, this, true);
+
+            core.io.Text.load(jsrender, function(uri, error, data) {
+                var tmpl = $.template('inbox', data.text);
+                document.getElementById('jsrender').addEventListener('click', function() {
+                    self.benchmark('jsrender', function(params) {
+                        return $.render(params, 'inbox');
                     });
                 }, false);
             }, this, true);
