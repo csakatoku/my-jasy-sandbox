@@ -34,6 +34,7 @@ core.Class('benchmark.App', {
 
             core.io.Text.load(haml, function(uri, error, data) {
                 document.getElementById('haml-compiled').addEventListener('click', function() {
+                    Haml(haml, {escapeHtmlByDefault: true})
                     var tmpl = Haml.compile(data.text);
                     self.benchmark('haml.js compiled', function(params) {
                         return Haml.execute(tmpl, self, params);
