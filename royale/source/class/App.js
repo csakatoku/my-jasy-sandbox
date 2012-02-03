@@ -69,11 +69,13 @@
             run: function() {
                 var controllerName, actionName;
                 var args = {};
+                var snakeToCamel = r.util.String.snakeToCamel;
+
                 if (location.hash) {
                     // #!/controller/:action
                     var tmp = location.hash.substr(3).split('/');
-                    controllerName = tmp[0];
-                    actionName = tmp[1] || 'index';
+                    controllerName = snakeToCamel(tmp[0]);
+                    actionName = tmp[1] ? snakeToCamel(tmp[1]) : 'index';
                     if (tmp.length >= 2) {
                         for (var i = 2; i < tmp.length; i += 2) {
                             var k = tmp[i];
