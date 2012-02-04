@@ -1,7 +1,4 @@
 (function(globals, undef) {
-    var __snakeToCamelMemo = {};
-    var __snakeToPascalMemo = {};
-
     var snakeToPascal = function(str) {
         var i, x,
             seq = str.split('_'),
@@ -15,11 +12,11 @@
     };
 
     core.Module('r.util.String', {
-        snakeToCamel: r.util.Functional.memoize(__snakeToCamelMemo, function(str) {
+        snakeToCamel: r.util.Functional.memoize(function(str) {
             var pascal = snakeToPascal(str);
             return pascal.charAt(0).toLowerCase() + pascal.substr(1);
         }),
 
-        snakeToPascal: r.util.Functional.memoize(__snakeToPascalMemo, snakeToPascal)
+        snakeToPascal: r.util.Functional.memoize(snakeToPascal)
     });
 }(this));
