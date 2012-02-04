@@ -1,4 +1,4 @@
-core.Class('r.controller.MyPage', {
+core.Class('r.controller.Home', {
     include: [ r.controller.Controller ],
 
     construct: function(context) {
@@ -9,7 +9,7 @@ core.Class('r.controller.MyPage', {
 
     members: {
         indexAction: function() {
-            return this.render('my_page');
+            return this.render();
         }
     }
 });

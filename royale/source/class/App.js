@@ -3,7 +3,7 @@
  */
 (function(globals, undef) {
     var classes = {
-        'default': r.controller.MyPage,
+        'home'   : r.controller.Home,
         'mission': r.controller.Mission,
         'gacha'  : r.controller.Gacha
     };
@@ -74,8 +74,13 @@
                 if (location.hash) {
                     // #!/controller/:action
                     var tmp = location.hash.substr(3).split('/');
-                    controllerName = snakeToCamel(tmp[0]);
-                    actionName = tmp[1] ? snakeToCamel(tmp[1]) : 'index';
+
+                    args._controller = tmp[0];
+                    controllerName = snakeToCamel(args._controller);
+
+                    args._action = tmp[1] || 'index';
+                    actionName = snakeToCamel(args._action);
+
                     if (tmp.length >= 2) {
                         for (var i = 2; i < tmp.length; i += 2) {
                             var k = tmp[i];
@@ -84,8 +89,8 @@
                         }
                     }
                 } else {
-                    controllerName = 'default';
-                    actionName = 'index';
+                    args._controller = controllerName = 'home';
+                    args._action = actionName = 'index';
                 }
 
                 var action = actionName + 'Action';
@@ -104,6 +109,7 @@
 
                 var f = controller[action];
                 if (f) {
+                    controller.setRoutingParameters(args);
                     var response = f.call(controller, args);
                     if (response && response.route) {
                         // TODO

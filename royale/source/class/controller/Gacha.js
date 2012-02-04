@@ -10,11 +10,11 @@ core.Class('r.controller.Gacha', {
             var ctxt = {
                 rarity: r.util.Random.randInt(0, 2)
             };
-            return this.render('gacha_do', ctxt);
+            return this.render(ctxt);
         },
 
         resultAction: function(args) {
-            return this.render('gacha_result');
+            return this.render();
         }
     }
 });
