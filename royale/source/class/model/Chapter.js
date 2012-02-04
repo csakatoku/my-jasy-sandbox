@@ -48,19 +48,14 @@
         }
     });
 
-    r.model.Chapter.init = function(context) {
-        context.getConfig('chapters').forEach(function(proto) {
-            var arr = [];
-            proto.missions.forEach(function(missionId) {
-                var m = r.model.Mission.get(missionId);
-                arr.push(m);
-            });
+    r.model.Chapter.init = function(data) {
+        data.forEach(function(proto) {
             var chapter = new r.model.Chapter({
                 id      : proto.id,
                 name    : proto.name,
                 begining: proto.begining,
                 ending  : proto.ending,
-                missions: arr
+                missions: []
             });
             __chapters[proto.id] = chapter;
             __chapterList.push(chapter);

@@ -4,6 +4,8 @@
  * @require {r.controller.Chapter}
  * @require {r.controller.Mission}
  * @require {r.controller.Gacha}
+ * @require {r.model.Chapter}
+ * @require {r.model.Mission}
  */
 (function(globals, undef) {
     core.Class('r.App', {
@@ -40,21 +42,15 @@
                     'r/proto/missions.json'
                 ];
                 core.io.Asset.load(ids, function(assets) {
-                    var k, v, obj, tmp, name;
-                    for (k in assets) {
-                        if (assets.hasOwnProperty(k)) {
-                            tmp = k.split('/');
-                            if (tmp[tmp.length - 2] === 'proto') {
-                                v = assets[k];
-                                name = tmp[tmp.length - 1].split('.')[0];
-                                this.__configs[name] = JSON.parse(v.text);
-                            }
+                    ids.forEach(function(id) {
+                        var v, obj, klass;
+                        if (assets[id] !== undef) {
+                            v = assets[id];
+                            obj = JSON.parse(v.text);
+                            klass = core.Class.getByName(obj.class);
+                            klass.init(obj.data);
                         }
-                    }
-
-                    // TODO
-                    r.model.Mission.init(this);
-                    r.model.Chapter.init(this);
+                    });
 
                     this.invoke('app.boot.complete', Date.now());
                     this.run();

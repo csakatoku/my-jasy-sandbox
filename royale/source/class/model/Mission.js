@@ -12,9 +12,11 @@
         }
     });
 
-    r.model.Mission.init = function(context) {
-        context.getConfig('missions').forEach(function(proto) {
+    r.model.Mission.init = function(data) {
+        data.forEach(function(proto) {
             var mission = new r.model.Mission(proto);
+            var chapter = r.model.Chapter.get(mission.chapterId);
+            chapter.getMissions().push(mission);
             __list.push(mission);
             __map[proto.id] = mission;
         });
