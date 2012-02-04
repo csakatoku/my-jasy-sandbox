@@ -99,6 +99,38 @@ core.Class('r.model.Player', {
             return next;
         },
 
+        getCurrentMission: function() {
+            var self = this;
+            var chapter = this.getCurrentChapter();
+            var missions = chapter.getMissions().filter(function(m) {
+                return !self.isLockedMission(m);
+            });
+            return missions[missions.length - 1];
+        },
+
+        isLockedMission: function(mission) {
+            var missionId = mission.id;
+            if (missionId === 1) {
+                return false;
+            }
+            var prev = r.model.Mission.get(missionId - 1);
+            return !this.isCompletedMission(prev);
+        },
+
+        isCompletedMission: function(mission) {
+            return this.getProgressById(mission.id) >= 100;
+        },
+
+        isLockedChapter: function(chapter) {
+            var chapterId = chapter.getId();
+            if (chapterId === 1) {
+                // first chapter is always unlocked
+                return false;
+            }
+            var prev = r.model.Chapter.get(chapterId - 1);
+            return !this.isCompletedChapter(prev);
+        },
+
         isCompletedChapter: function(chapter) {
             var self = this;
             return chapter.getMissions().every(function(mission) {

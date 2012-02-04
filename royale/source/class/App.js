@@ -53,6 +53,7 @@
                     }
 
                     // TODO
+                    r.model.Mission.init(this);
                     r.model.Chapter.init(this);
 
                     this.invoke('app.boot.complete', Date.now());

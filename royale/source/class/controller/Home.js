@@ -9,7 +9,12 @@ core.Class('r.controller.Home', {
 
     members: {
         indexAction: function() {
-            return this.render();
+            var player = this.__context.getPlayer();
+            var mission = player.getCurrentMission();
+            return this.render({
+                player : player,
+                mission: mission
+            });
         }
     }
 });

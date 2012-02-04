@@ -49,15 +49,10 @@
     });
 
     r.model.Chapter.init = function(context) {
-        var missions = {};
-        context.getConfig('missions').forEach(function(proto) {
-            missions[proto.id] = proto;
-        });
-
         context.getConfig('chapters').forEach(function(proto) {
             var arr = [];
             proto.missions.forEach(function(missionId) {
-                var m = missions[missionId];
+                var m = r.model.Mission.get(missionId);
                 arr.push(m);
             });
             var chapter = new r.model.Chapter({

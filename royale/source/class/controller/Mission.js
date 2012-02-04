@@ -14,7 +14,13 @@ core.Class('r.controller.Mission', {
         indexAction: function(args) {
             var player = this.__context.getPlayer();
             var chapter = args.chapter ? r.model.Chapter.get(args.chapter) :  player.getCurrentChapter();
-            var missions = chapter.getMissions();
+            var missions = chapter
+                .getMissions()
+                .filter(function(m) {
+                    return !player.isLockedMission(m);
+                }).sort(function(a, b) {
+                    return b.id - a.id;
+                });
             var params = {
                 chapter_name : chapter.getName(),
                 missions: missions
@@ -29,7 +35,7 @@ core.Class('r.controller.Mission', {
             var player = this.__context.getPlayer();
             var chapter = player.getCurrentChapter();
             var mission = chapter.getMissionById(args.id);
-            if (mission == undefined) {
+            if (mission == undefined || player.isLockedMission(mission)) {
                 return this.redirect('mission');
             }
 
