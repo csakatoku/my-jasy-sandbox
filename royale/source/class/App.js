@@ -1,13 +1,11 @@
 /**
  * @asset {r/*}
+ * @require {r.controller.Home}
+ * @require {r.controller.Chapter}
+ * @require {r.controller.Mission}
+ * @require {r.controller.Gacha}
  */
 (function(globals, undef) {
-    var classes = {
-        'home'   : r.controller.Home,
-        'mission': r.controller.Mission,
-        'gacha'  : r.controller.Gacha
-    };
-
     core.Class('r.App', {
         include: [ r.Observable ],
 
@@ -67,20 +65,13 @@
             },
 
             run: function() {
-                var controllerName, actionName;
                 var args = {};
-                var snakeToCamel = r.util.String.snakeToCamel;
 
                 if (location.hash) {
                     // #!/controller/:action
                     var tmp = location.hash.substr(3).split('/');
-
                     args._controller = tmp[0];
-                    controllerName = snakeToCamel(args._controller);
-
                     args._action = tmp[1] || 'index';
-                    actionName = snakeToCamel(args._action);
-
                     if (tmp.length >= 2) {
                         for (var i = 2; i < tmp.length; i += 2) {
                             var k = tmp[i];
@@ -89,14 +80,15 @@
                         }
                     }
                 } else {
-                    args._controller = controllerName = 'home';
-                    args._action = actionName = 'index';
+                    args._controller = 'home';
+                    args._action = 'index';
                 }
 
-                var action = actionName + 'Action';
-                var klass = classes[controllerName];
+                var action = r.util.String.snakeToCamel(args._action) + 'Action';
+                var controllerName = r.util.String.snakeToPascal(args._controller);
+                var klass = core.Class.getByName('r.controller.' + controllerName);
                 var controller;
-                if (this.__currentController === undefined) {
+                if (this.__currentController === undef) {
                     this.__currentController = controller = new klass(this);
                 } else {
                     if (this.__currentController.constructor.className === klass.className) {

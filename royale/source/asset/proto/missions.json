@@ -38,7 +38,7 @@
     },
     {
         "id": 5,
-        "name": "Mission 2",
+        "name": "Mission 5",
         "description": "192.168.56.101",
         "xp": 2,
         "energy": 2,
@@ -47,7 +47,7 @@
     },
     {
         "id": 6,
-        "name": "Mission 3",
+        "name": "Mission 6",
         "description": "<span>descripton</span>",
         "xp": 3,
         "energy": 3,

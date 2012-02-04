@@ -11,9 +11,9 @@ core.Class('r.controller.Mission', {
     },
 
     members: {
-        indexAction: function() {
+        indexAction: function(args) {
             var player = this.__context.getPlayer();
-            var chapter = player.getCurrentChapter();
+            var chapter = args.chapter ? r.model.Chapter.get(args.chapter) :  player.getCurrentChapter();
             var missions = chapter.getMissions();
             var params = {
                 chapter_name : chapter.getName(),
