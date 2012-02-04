@@ -48,7 +48,7 @@ core.Class('benchmark.App', {
 
             core.io.Text.load(_jade, function(uri, error, data) {
                 document.getElementById('jade-compiled').addEventListener('click', function() {
-                    var tmpl = jade.compile(data.text, { cache: true, filename: "jade" });
+                    var tmpl = jade.compile(data.text, { filename: "jade", compileDebug: false });
                     self.benchmark('jade.js compiled', function(params) {
                         return tmpl(params);
                     });
