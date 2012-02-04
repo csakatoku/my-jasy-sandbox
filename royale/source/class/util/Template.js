@@ -26,7 +26,7 @@
                 }
 
                 var deferred = new Deferred();
-                var path = 'asset/r/templates/' + templateName + '.html';
+                var path = 'asset/r/templates/' + templateName + '.mustache';
                 core.io.Text.load(path, function(url, _, data) {
                     var tmpl = __compiled[cacheKey] = Hogan.compile(data.text);
                     __cache[cacheKey] = templateString;
