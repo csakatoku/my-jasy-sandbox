@@ -1,0 +1,29 @@
+<h2>売却</h2>
+<table>
+  {{#crews}}
+  <tr data-outlet="{{ id }}">
+    <td><img src="asset/r/images/crew_normal.png" /></td>
+    <td>
+      <div><span>近</span> {{ name }}</div>
+      <div><span>Lv</span>{{ level }} 必要統率力 3</div>
+      <div><span>AT</span>{{ attack }} <span>DF</span>{{ defence }}</div>
+    </td>
+    <td>
+      <label>売却<input type="checkbox" id="crew_{{ id }}" name="crew_{{ id }}" /></label>
+    </td>
+  </tr>
+  {{/crews}}
+</table>
+
+<div>
+  <a href="#!/crew/sell_confirm">売却する</a>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="#!/crew/index">一覧</a></li>
+    <li><a href="#!/crew/merge">合成</a></li>
+    <li>売却</li>
+    <li><a href="#!/home/index">マイページ</a></li>
+  </ul>
+</nav>

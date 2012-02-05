@@ -7,6 +7,10 @@
         include: [ r.Observable, r.util.Template ],
 
         properties: {
+            context: {
+                type: 'object'
+            },
+
             routingParameters: {
                 type: 'object',
                 init: {}
@@ -15,11 +19,20 @@
 
         members: {
             redirect: function(route, params) {
-                var args = params || {};
-                return {
-                    'route': route,
-                    'args' : args
-                };
+                var tmp = [];
+                var next = '#!/' + route;
+                params = params || {};
+                for (var k in params) {
+                    if (params.hasOwnProperty(k)) {
+                        tmp.push(k);
+                        tmp.push(params[k] || 0);
+                    }
+                }
+                if (tmp.length) {
+                    next += '/' + (tmp.join('/'));
+                }
+                location.hash = next;
+                this.getContext().run();
             },
 
             render: function(params, templateName) {

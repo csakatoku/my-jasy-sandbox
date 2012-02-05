@@ -1,0 +1,25 @@
+<h2>強化する仲間を選択</h2>
+<table>
+  {{#crews}}
+  <tr data-outlet="{{ id }}">
+    <td><img src="asset/r/images/crew_normal.png" /></td>
+    <td>
+      <div><span>近</span> {{ name }}</div>
+      <div><span>Lv</span>{{ level }} 必要統率力 3</div>
+      <div><span>AT</span>{{ attack }} <span>DF</span>{{ defence }}</div>
+    </td>
+    <td>
+      <a href="#!/crew/merge_select_done/id/{{ id }}">強化する</a>
+    </td>
+  </tr>
+  {{/crews}}
+</table>
+
+<nav>
+  <ul>
+    <li><a href="#!/crew/index">一覧</a></li>
+    <li><a href="#!/crew/merge">合成</a></li>
+    <li>売却</li>
+    <li><a href="#!/home/index">マイページ</a></li>
+  </ul>
+</nav>

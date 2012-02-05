@@ -1,0 +1,22 @@
+<h2>仲間一覧</h2>
+<table>
+  {{#crews}}
+  <tr data-outlet="{{ id }}">
+    <td><img src="asset/r/images/crew_normal.png" /></td>
+    <td>
+      <div><span>近</span> {{ name }}</div>
+      <div><span>Lv</span>{{ level }} 必要統率力 3</div>
+      <div><span>AT</span>{{ attack }} <span>DF</span>{{ defence }}</div>
+    </td>
+  </tr>
+  {{/crews}}
+</table>
+
+<nav>
+  <ul>
+    <li>一覧</li>
+    <li><a href="#!/crew/merge">合成</a></li>
+    <li><a href="#!/crew/sell">売却</a></li>
+    <li><a href="#!/home/index">マイページ</a></li>
+  </ul>
+</nav>

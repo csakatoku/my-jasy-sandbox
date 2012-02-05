@@ -1,0 +1,41 @@
+<h2>合成</h2>
+<h3>ベースとなる仲間</h3>
+<table>
+  <tr">
+    <td><img src="asset/r/images/crew_normal.png" /></td>
+    <td>
+      <div><span>近</span> {{ base.name }}</div>
+      <div><span>Lv</span>{{ base.level }} 必要統率力 3</div>
+      <div><span>AT</span>{{ base.attack }} <span>DF</span>{{ base.defence }}</div>
+    </td>
+    <td>
+      <a href="#!/crew/merge_select">変更する</a>
+    </td>
+  </tr>
+</table>
+
+<h3>力を与える仲間</h3>
+<table>
+  {{#crews}}
+  <tr data-outlet="{{ id }}">
+    <td><img src="asset/r/images/crew_normal.png" /></td>
+    <td>
+      <div><span>近</span> {{ name }}</div>
+      <div><span>Lv</span>{{ level }} 必要統率力 3</div>
+      <div><span>AT</span>{{ attack }} <span>DF</span>{{ defence }}</div>
+    </td>
+    <td>
+      <label>合成<input type="checkbox" id="crew_{{ id }}" name="crew_{{ id }}" /></label>
+    </td>
+  </tr>
+  {{/crews}}
+</table>
+
+<nav>
+  <ul>
+    <li><a href="#!/crew/index">一覧</a></li>
+    <li>合成</li>
+    <li><a href="#!/crew/sell">売却</a></li>
+    <li><a href="#!/home/index">マイページ</a></li>
+  </ul>
+</nav>

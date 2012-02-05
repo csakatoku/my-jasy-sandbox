@@ -4,6 +4,7 @@
  * @require {r.controller.Chapter}
  * @require {r.controller.Mission}
  * @require {r.controller.Gacha}
+ * @require {r.controller.Crew}
  * @require {r.model.Chapter}
  * @require {r.model.Mission}
  * @require {r.model.Crew}
@@ -16,6 +17,7 @@
         construct: function() {
             this.__currentController = undefined;
             this.__configs = {};
+            this.__preferences = {};
         },
 
         properties: {
@@ -28,6 +30,18 @@
         members: {
             getConfig: function(name) {
                 return this.__configs[name] || [];
+            },
+
+            getPreference: function(key, _default) {
+                if (this.__preferences[key] === undef) {
+                    return _default;
+                } else {
+                    return this.__preferences[key];
+                }
+            },
+
+            setPreference: function(key, value) {
+                this.__preferences[key] = value;
             },
 
             boot: function() {
@@ -99,25 +113,12 @@
                         this.__currentController = controller = new klass(this);
                     }
                 }
+                controller.setContext(this);
 
                 var f = controller[action];
                 if (f) {
                     controller.setRoutingParameters(args);
-                    var response = f.call(controller, args);
-                    if (response && response.route) {
-                        // TODO
-                        var extra = response.args;
-                        var tmp = [];
-                        for (var k in extra) {
-                            if (extra.hasOwnProperty(k)) {
-                                tmp.push(k);
-                                tmp.push(extra[k] || 0);
-                            }
-                        }
-                        var next = '#!/' + response.route + '/' + (tmp.join('/'));
-                        location.hash = next;
-                        this.run();
-                    }
+                    f.call(controller, args);
                 }
             }
         }
