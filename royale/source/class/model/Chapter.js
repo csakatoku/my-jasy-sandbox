@@ -1,14 +1,12 @@
 (function(globals, undef) {
-    var __chapters = {};
-    var __chapterList = [];
 
     core.Class('r.model.Chapter', {
         construct: function(args) {
+            this.id = args.id;
             this.setId(args.id);
             this.setName(args.name);
             this.setBegining(args.begining);
             this.setEnding(args.ending);
-            this.setMissions(args.missions);
         },
 
         properties: {
@@ -28,7 +26,8 @@
             },
 
             missions: {
-                type: 'array'
+                type: 'array',
+                init: []
             }
         },
 
@@ -48,25 +47,5 @@
         }
     });
 
-    r.model.Chapter.init = function(data) {
-        data.forEach(function(proto) {
-            var chapter = new r.model.Chapter({
-                id      : proto.id,
-                name    : proto.name,
-                begining: proto.begining,
-                ending  : proto.ending,
-                missions: []
-            });
-            __chapters[proto.id] = chapter;
-            __chapterList.push(chapter);
-        });
-    };
-
-    r.model.Chapter.get = function(chapterId) {
-        return __chapters[chapterId];
-    };
-
-    r.model.Chapter.list = function() {
-        return __chapterList;
-    };
+    r.model.Prototype.expose(r.model.Chapter);
 }(this));

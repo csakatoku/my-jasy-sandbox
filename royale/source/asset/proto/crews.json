@@ -1,0 +1,29 @@
+{
+    "class": "r.model.Crew",
+    "data": [
+        {
+            "id"         : 1,
+            "name"       : "Crew 1",
+            "description": "Crew 1 Description",
+            "attack"     : 100,
+            "defence"    : 100,
+            "rarity"     : 1
+        },
+        {
+            "id"         : 2,
+            "name"       : "Crew 2",
+            "description": "Crew 2 Description",
+            "attack"     : 200,
+            "defence"    : 50,
+            "rarity"     : 1
+        },
+        {
+            "id"         : 3,
+            "name"       : "Crew 3",
+            "description": "Crew 3 Description",
+            "attack"     : 50,
+            "defence"    : 200,
+            "rarity"     : 1
+        }
+    ]
+}

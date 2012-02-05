@@ -1,0 +1,50 @@
+{
+    "class": "r.model.Gacha",
+    "data": [
+        {
+            "id"          : 1,
+            "name"        : "Bronse",
+            "collections" : {
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        },
+        {
+            "id"         : 2,
+            "name"       : "Silver",
+            "collections": {
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        },
+        {
+            "id"         : 3,
+            "name"       : "Gold",
+            "collections": {
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        },
+        {
+            "id"         : 4,
+            "name"       : "Platinum",
+            "collections": {
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        },
+        {
+            "id"         : 5,
+            "name"       : "Event",
+            "collections": {
+                "1": 1,
+                "2": 2,
+                "3": 3
+            }
+        }
+    ]
+}

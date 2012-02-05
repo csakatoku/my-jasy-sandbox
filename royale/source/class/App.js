@@ -6,6 +6,8 @@
  * @require {r.controller.Gacha}
  * @require {r.model.Chapter}
  * @require {r.model.Mission}
+ * @require {r.model.Crew}
+ * @require {r.model.Gacha}
  */
 (function(globals, undef) {
     core.Class('r.App', {
@@ -39,7 +41,9 @@
 
                 var ids = [
                     'r/proto/chapters.json',
-                    'r/proto/missions.json'
+                    'r/proto/missions.json',
+                    'r/proto/crews.json',
+                    'r/proto/gacha.json'
                 ];
                 core.io.Asset.load(ids, function(assets) {
                     ids.forEach(function(id) {

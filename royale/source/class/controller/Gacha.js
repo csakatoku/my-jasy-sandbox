@@ -7,14 +7,28 @@ core.Class('r.controller.Gacha', {
         },
 
         doAction: function(args) {
-            var ctxt = {
-                rarity: r.util.Random.randInt(0, 2)
-            };
-            return this.render(ctxt);
+            var gachaId = args.id || 0;
+            var gacha = r.model.Gacha.get(gachaId);
+            if (!gacha) {
+                return this.redirect('gacha/index');
+            }
+
+            var crew = gacha.draw();
+            return this.render({
+                crew: crew
+            });
         },
 
         resultAction: function(args) {
-            return this.render();
+            var crewId = args.id || 0;
+            var crew = r.model.Crew.get(crewId);
+            if (!crew) {
+                return this.redirect('gacha/index');
+            }
+
+            return this.render({
+                crew: crew
+            });
         }
     }
 });
