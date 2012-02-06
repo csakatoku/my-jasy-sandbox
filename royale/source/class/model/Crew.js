@@ -1,4 +1,5 @@
 (function(globals, undef) {
+
     core.Class('r.model.Crew', {
         include: [ r.model.Prototype ],
 

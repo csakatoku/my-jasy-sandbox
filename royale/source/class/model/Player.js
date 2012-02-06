@@ -156,6 +156,46 @@ core.Class('r.model.Player', {
             return this.__currentChapter;
         },
 
+        addCrew: function(obj) {
+            var clone = {};
+            for (var k in obj) {
+                if (obj.hasOwnProperty(k)) {
+                    clone[k] = obj[k];
+                }
+            }
+            clone.id = this.getCrews().length + 1;
+            this.getCrews().push(clone);
+        },
+
+        sellCrew: function(id) {
+            var crew, crews = this.getCrews();
+            id = parseInt(id);
+            for (var i = 0, length = crews.length; i < length; i++) {
+                crew = crews[i];
+                if (crew.id === id) {
+                    crews.splice(i, 1);
+                    this.setCoins(this.getCoins() + 100);
+                    break;
+                }
+            }
+        },
+
+        getCrews: function() {
+            if (this.__crews === undefined) {
+                this.__crews = [
+                    {
+                        id: 1,
+                        name: 'Default Crew',
+                        attack: 1000,
+                        defence: 500,
+                        level: 1,
+                        xp: 0
+                    }
+                ];
+            }
+            return this.__crews;
+        },
+
         onGameBooted: function() {
             var self = this;
             this.__lastEnergyGenerated = Date.now();

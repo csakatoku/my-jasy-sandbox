@@ -106,40 +106,25 @@
                 });
                 return this.render({
                     'crews': selected
-                }).next(function(self) {
-                    $('a[data-outlet]').bind('click', function(e) {
-                        self.redirect('crew/sell');
-                        return false;
-                    });
                 });
             },
 
-            __getCrews: function() {
-                var player = this.__context.getPlayer();
-                var crews = [
-                    {
-                        id: 1,
-                        level: 19,
-                        name: 'Crew 1',
-                        attack: 99,
-                        defence: 1001
-                    },
-                    {
-                        id: 2,
-                        name: 'Crew 2',
-                        level: 34,
-                        attack: 3289,
-                        defence: 1001
-                    },
-                    {
-                        id: 3,
-                        name: 'Crew 3',
-                        level: 23,
-                        attack: 10002,
-                        defence: 1001
+            sellExecuteAction: function(args) {
+                var selected = [];
+                var player = this.getContext().getPlayer();
+                var sell = this.__sell;
+                Object.keys(sell).forEach(function(id) {
+                    if (sell[id]) {
+                        player.sellCrew(id);
                     }
-                ];
-                return crews;
+                });
+                this.__sell = {};
+                return this.redirect('crew/index');
+            },
+
+            __getCrews: function() {
+                var player = this.getContext().getPlayer();
+                return player.getCrews();
             }
         }
     });
