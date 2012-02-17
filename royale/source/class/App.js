@@ -1,14 +1,14 @@
 /**
- * @asset {r/*}
- * @require {r.controller.Home}
- * @require {r.controller.Chapter}
- * @require {r.controller.Mission}
- * @require {r.controller.Gacha}
- * @require {r.controller.Crew}
- * @require {r.model.Chapter}
- * @require {r.model.Mission}
- * @require {r.model.Crew}
- * @require {r.model.Gacha}
+ * #asset(r/*)
+ * #require(r.controller.Home)
+ * #require(r.controller.Chapter)
+ * #require(r.controller.Mission)
+ * #require(r.controller.Gacha)
+ * #require(r.controller.Crew)
+ * #require(r.model.Chapter)
+ * #require(r.model.Mission)
+ * #require(r.model.Crew)
+ * #require(r.model.Gacha)
  */
 (function(globals, undef) {
     core.Class('r.App', {
@@ -65,7 +65,7 @@
                         if (assets[id] !== undef) {
                             v = assets[id];
                             obj = JSON.parse(v.text);
-                            klass = core.Class.getByName(obj.class);
+                            klass = core.Main.resolveNamespace(obj.class);
                             klass.init(obj.data);
                         }
                     });
@@ -101,7 +101,7 @@
 
                 var action = r.util.String.snakeToCamel(args._action) + 'Action';
                 var controllerName = r.util.String.snakeToPascal(args._controller);
-                var klass = core.Class.getByName('r.controller.' + controllerName);
+                var klass = core.Main.resolveNamespace('r.controller.' + controllerName);
                 var controller;
                 if (this.__currentController === undef) {
                     this.__currentController = controller = new klass(this);

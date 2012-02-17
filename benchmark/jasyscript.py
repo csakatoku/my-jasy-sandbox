@@ -5,9 +5,6 @@ def getSession():
 
     # 依存しているJasyプロジェクトのディレクトリを指定
     session.addProject(Project("../externals/core/"))
-    #session.addProject(Project("../externals/jquery/"))
-    #session.addProject(Project("../externals/jsrender/"))
-    session.addProject(Project("../externals/hogan.js/"))
     session.addProject(Project("."))
 
     return session
@@ -39,7 +36,7 @@ def build():
     for staticFile in ["index.html", "whiskers.js", "jade.js", "haml.js", 'swig.pack.min.js']:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
 
-    for staticFile in ["jsrender/jsrender.js"]:
+    for staticFile in ["jsrender/jsrender.js", "hogan.js/hogan-1.0.5.min.js"]:
         updateFile("../externals/%s" % staticFile, "build/%s" % staticFile)
 
     # 最適化オプションを指定

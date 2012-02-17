@@ -1,5 +1,5 @@
 /**
- * @asset {myassets/*}
+ * #asset(myassets/*)
  */
 core.Class('myassets.App', {
     construct: function(settings) {

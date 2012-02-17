@@ -11,7 +11,6 @@ def getSession():
     session = Session()
 
     session.addProject(Project("../externals/core/"))
-    session.addProject(Project("../externals/jquery/"))
     session.addProject(Project("."))
 
     return session

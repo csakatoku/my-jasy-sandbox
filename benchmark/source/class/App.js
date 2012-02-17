@@ -1,7 +1,5 @@
 /**
- * @require {$}
- * @require {jsrender}
- * @asset {benchmark/*}
+ * #asset(benchmark/*)
  */
 "use strict";
 core.Class('benchmark.App', {

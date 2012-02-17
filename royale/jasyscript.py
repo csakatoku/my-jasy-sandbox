@@ -13,8 +13,6 @@ def getSession():
     session = Session()
 
     session.addProject(Project("../externals/core/"))
-    session.addProject(Project("../externals/hogan.js/"))
-    session.addProject(Project("./external/jsdeferred/"))
     session.addProject(Project("."))
 
     return session
@@ -49,6 +47,9 @@ def build():
     # Copy files from source
     for staticFile in ["index.html", "zepto.min.js"]:
         updateFile("source/%s" % staticFile, "build/%s" % staticFile)
+
+    for staticFile in ["jsdeferred/jsdeferred.js"]:
+        updateFile("external/%s" % staticFile, "build/%s" % staticFile)
 
     # Compiler configuration
     optimization = Optimization("variables", "declarations", "blocks", "privates")

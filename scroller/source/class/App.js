@@ -1,5 +1,5 @@
 /**
- * @require {core.polyfill.requestAnimationFrame}
+ * #require(core.polyfill.requestAnimationFrame)
  */
 core.Class('p.scroller.App', {
     construct: function(settings) {
