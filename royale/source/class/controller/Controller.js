@@ -31,8 +31,8 @@
                 if (tmp.length) {
                     next += '/' + (tmp.join('/'));
                 }
-                location.hash = next;
-                this.getContext().run();
+
+                this.getContext().getHistory().push(next);
             },
 
             render: function(params, templateName) {

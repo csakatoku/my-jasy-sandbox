@@ -44,6 +44,10 @@
                 this.__preferences[key] = value;
             },
 
+            getHistory: function() {
+                return this.__history;
+            },
+
             boot: function() {
                 var self = this;
                 var bootStarted = Date.now();
@@ -52,6 +56,10 @@
                 this.setPlayer(player);
 
                 this.invoke('app.boot.start', bootStarted);
+
+                this.__history = new r.history.PushStateBackend();
+                this.__history.init();
+                this.listen('route.change', this.run);
 
                 var ids = [
                     'r/proto/chapters.json',
@@ -73,18 +81,15 @@
                     this.invoke('app.boot.complete', Date.now());
                     this.run();
                 },this, true); // TODO cache
-
-                $(window).bind('hashchange', function() {
-                    self.run();
-                });
             },
 
             run: function() {
                 var args = {};
+                var path = this.getHistory().getPath();
 
-                if (location.hash) {
+                if (path) {
                     // #!/controller/:action
-                    var tmp = location.hash.substr(3).split('/');
+                    var tmp = path.substr(3).split('/');
                     args._controller = tmp[0];
                     args._action = tmp[1] || 'index';
                     if (tmp.length >= 2) {
