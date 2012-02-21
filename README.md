@@ -11,9 +11,9 @@ cloneした直後に以下のコマンドを実行して、サブモジュール
     $ git submodule init
     $ git submodule update
 
-現在のところ、jasy==0.4.6でしか動きません。
+現在のところ、jasy==0.5.0でしか動きません。
 
-    $ pip install https://github.com/wpbasti/jasy/zipball/0.4.6
+    $ pip install https://github.com/wpbasti/jasy/zipball/0.5-beta5
 
 各プロジェクトのビルドの仕方は、
 

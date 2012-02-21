@@ -13,7 +13,6 @@ def getSession():
     session = Session()
 
     session.addProject(Project("../externals/core/"))
-    session.addProject(Project("../externals/jquery/"))
     session.addProject(Project("../externals/scroller/"))
     session.addProject(Project("."))
 
